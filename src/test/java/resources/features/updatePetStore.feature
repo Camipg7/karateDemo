@@ -1,61 +1,24 @@
 Feature: Actualizacion de mascotas en PetStore
-
   Background:
     * url urlBase
-
   @putPet
   Scenario: Actualizar informacion de una mascota mediante PUT
-
-    # Primero creamos la mascota para obtener un ID valido
     Given path '/pet'
-    And request
-    """
-    {
-      "id": 0,
-      "category": {
-        "id": 0,
-        "name": "dogs"
-      },
-      "name": "Rocky",
-      "photoUrls": [
-        "string"
-      ],
-      "tags": [
-        {
-          "id": 0,
-          "name": "string"
-        }
-      ],
-      "status": "available"
-    }
-    """
+     * def createRequest = read('classpath:resources/request/createForUpdate.json')
+    And request createRequest
+
     When method post
     Then status 200
+    And match response.id == '#number'
+    And match response.name == 'Rocky'
+    And match response.status == 'available'
 
     * def petId = response.id
 
     Given path '/pet'
-    And request
-    """
-    {
-      "id": "#(petId)",
-      "category": {
-        "id": 0,
-        "name": "dogs"
-      },
-      "name": "Rocky Actualizado",
-      "photoUrls": [
-        "string"
-      ],
-      "tags": [
-        {
-          "id": 0,
-          "name": "string"
-        }
-      ],
-      "status": "sold"
-    }
-    """
+    * def updateRequest = read('classpath:resources/request/update.json')
+    And request updateRequest
+
     When method put
     Then status 200
     And match response.id == petId

@@ -6,12 +6,12 @@ function fn() {
   }
   var config = {
     env: env,
-    myVarName: 'someValue'
   }
   if (env == 'dev') {
     config.urlBase='https://petstore.swagger.io/v2'
+    config.dummyJsonUrl = 'https://dummyjson.com'
+    config.jsonPlaceholderUrl = 'https://jsonplaceholder.typicode.com'
   } else if (env == 'e2e') {
-    // customize
   }
   return config;
 }

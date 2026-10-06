@@ -1,17 +1,13 @@
 Feature: Obtencion de token de autenticacion
+Background:
+* url dummyJsonUrl
 
   @token
   Scenario: Obtener token mediante login
-    Given url 'https://dummyjson.com'
-    And path '/auth/login'
-    And request
-    """
-    {
-      "username": "emilys",
-      "password": "emilyspass",
-      "expiresInMins": 30
-    }
-    """
+    Given  path '/auth/login'
+    * def loginRequest = read ('classpath:resources/request/loginRequest.json')
+    And request loginRequest
+  
     When method post
     Then status 200
     And match response.accessToken == '#string'

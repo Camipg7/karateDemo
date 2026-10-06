@@ -9,7 +9,6 @@ import com.intuit.karate.Runner;
 import karate.util.ReportGenerator;
 
 class TestRunner {
-
     @Test
     void testAll() {
 

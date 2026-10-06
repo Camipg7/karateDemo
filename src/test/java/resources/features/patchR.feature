@@ -1,15 +1,11 @@
 Feature: Actualizacion parcial de un recurso mediante PATCH
-
+Background:
+    * url jsonPlaceholderUrl
   @patchResource
   Scenario: Actualizar parcialmente un recurso
-    Given url 'https://jsonplaceholder.typicode.com'
-    And path '/posts/1'
-    And request
-    """
-    {
-      "title": "Titulo actualizado con Karate"
-    }
-    """
+    Given path '/posts/1'
+    * def patchRequest = read('classpath:resources/request/patch.json')
+    And request patchRequest
     When method patch
     Then status 200
     And match response.id == 1
