@@ -3,7 +3,7 @@ Feature: Validacion de recurso no encontrado
 Background:
     * url jsonPlaceholderUrl
 
-@notFound
+@negative @regression
 Scenario: Validar respuesta HTTP 404 al consultar un recurso inexistente
 
     Given path '/posts/999999'

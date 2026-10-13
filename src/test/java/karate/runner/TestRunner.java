@@ -12,10 +12,13 @@ class TestRunner {
     @Test
     void testAll() {
 
-        Results results = Runner.path("classpath:resources/features").outputCucumberJson(true).parallel(1);
+        Results results = Runner.path("classpath:resources/features").outputCucumberJson(true).parallel(4);
 
         ReportGenerator.generateReport("target/karate-reports");
 
         assertEquals(0, results.getFailCount(), results.getErrorMessages());
     }
 }
+
+
+

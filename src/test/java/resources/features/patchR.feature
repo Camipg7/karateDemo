@@ -1,7 +1,7 @@
 Feature: Actualizacion parcial de un recurso mediante PATCH
 Background:
     * url jsonPlaceholderUrl
-  @patchResource
+ @regression
   Scenario: Actualizar parcialmente un recurso
     Given path '/posts/1'
     * def patchRequest = read('classpath:resources/request/patch.json')

@@ -1,9 +1,8 @@
 Feature: Ejemplo de karate
-
 Background:
     * url urlBase
 
-@createPet
+@createPet @smoke @regression
 Scenario Outline: valida la creación de una mascota
 
     Given path '/pet'
@@ -11,12 +10,12 @@ Scenario Outline: valida la creación de una mascota
     * set json.name = '<petName>'
     And request json
     When method post
-
     Then status 200
     And match response.id == '#number'
     And match response.name == '<petName>'
     And match response.status == 'available'
-
+    And match response.category.name == 'dogs'
+    And match response.photoUrls == '#[1]'
     And print 'Mascota creada: ', response.name
 
 Examples:

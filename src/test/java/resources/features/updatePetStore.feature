@@ -1,27 +1,33 @@
 Feature: Actualizacion de mascotas en PetStore
   Background:
     * url urlBase
-  @putPet
+  @putPet @regression
   Scenario: Actualizar informacion de una mascota mediante PUT
-    Given path '/pet'
-     * def createRequest = read('classpath:resources/request/createForUpdate.json')
-    And request createRequest
+    * def petId = Java.type('java.lang.System').currentTimeMillis()
+    * def creada = call read('classpath:resources/helpers/createPet.feature') { petId: '#(petId)', petName: 'Rocky' }
 
-    When method post
-    Then status 200
-    And match response.id == '#number'
-    And match response.name == 'Rocky'
-    And match response.status == 'available'
-
-    * def petId = response.id
-
-    Given path '/pet'
+    * def idCreado = creada.createdPetId
     * def updateRequest = read('classpath:resources/request/update.json')
-    And request updateRequest
+    * set updateRequest.id = idCreado
+    * set updateRequest.name = 'Rocky Actualizado'
+    * set updateRequest.status = 'sold'
 
+    Given path '/pet'
+    And request updateRequest
     When method put
     Then status 200
-    And match response.id == petId
+
+    And match response.id == idCreado
     And match response.name == 'Rocky Actualizado'
     And match response.status == 'sold'
-    And print 'Mascota actualizada:', response
+
+    Given path '/pet', idCreado
+    When method get
+    Then status 200
+
+    And match response.id == idCreado
+    And match response.name == 'Rocky Actualizado'
+    And match response.status == 'sold'
+    And match response.category.name == 'dogs'
+
+    * print 'Mascota actualizada y verificada:', response
