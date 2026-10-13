@@ -16,3 +16,6 @@ mvn clean test "-Dkarate.options=--tags @regression"
 
 Ejecutar pruebas negativas
 mvn clean test "-Dkarate.options=--tags @negative"
+
+Validación CI
+Se verifica la ejecución automática de pruebas Smoke mediante Pull Requests en GitHub Actions.
